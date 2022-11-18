@@ -1,6 +1,6 @@
 package com.acme.maintenance.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,10 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.lang.NonNull;
 
 @Entity
+@Table(name = "PECA", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "nserie" }))
 public class Peca {
 
 	@Id
@@ -27,14 +30,46 @@ public class Peca {
 	@ManyToMany(mappedBy = "componentes")
 	private List<Relatorio> relatorios;
 	private String fabricante;
+	private String descricao;
 	private float horas_uso_peca;
 	private String fornecedor;
 	private String lote;
 	private float valor;
 	private String tipo;
 	private boolean isActive;
-	private Date dataInicio;
-	private Date dataVencimento;
+	private LocalDate dataInicio;
+	private LocalDate dataVencimento;
+	private int tempoValidade;
+	
+	
+
+	public Peca(int id, int nserie, Aviao aviao, List<Relatorio> relatorios, String fabricante, float horas_uso_peca,
+			String fornecedor, String lote, float valor, String tipo, boolean isActive, LocalDate dataInicio,
+			LocalDate dataVencimento, int tempoValidade) {
+		super();
+		this.id = id;
+		this.nserie = nserie;
+		this.aviao = aviao;
+		this.relatorios = relatorios;
+		this.fabricante = fabricante;
+		this.horas_uso_peca = horas_uso_peca;
+		this.fornecedor = fornecedor;
+		this.lote = lote;
+		this.valor = valor;
+		this.tipo = tipo;
+		this.isActive = isActive;
+		this.dataInicio = dataInicio;
+		this.dataVencimento = dataVencimento;
+		this.tempoValidade = tempoValidade;
+	}
+
+	public int getTempoValidade() {
+		return tempoValidade;
+	}
+
+	public void setTempoValidade(int tempoValidade) {
+		this.tempoValidade = tempoValidade;
+	}
 
 	public Peca() {
 		super();
@@ -134,20 +169,28 @@ public class Peca {
 		this.isActive = isActive;
 	}
 
-	public Date getDataInicio() {
+	public LocalDate getDataInicio() {
 		return dataInicio;
 	}
 
-	public void setDataInicio(Date dataInicio) {
+	public void setDataInicio(LocalDate dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	public Date getDataVencimento() {
+	public LocalDate getDataVencimento() {
 		return dataVencimento;
 	}
 
-	public void setDataVencimento(Date dataVencimento) {
+	public void setDataVencimento(LocalDate dataVencimento) {
 		this.dataVencimento = dataVencimento;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 }

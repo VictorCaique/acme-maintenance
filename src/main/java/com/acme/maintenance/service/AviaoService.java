@@ -26,6 +26,15 @@ public class AviaoService {
 		return new ResponseEntity<>(dbManutencoes, HttpStatus.OK);
 	}
 	
+	public ResponseEntity<Object> findByNSerie(int nserie){
+		Aviao dbManutencoes = aviaoRepository.findBynserie(nserie);
+		if(dbManutencoes == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(dbManutencoes, HttpStatus.OK);
+	}
+	
 	public Aviao save(Aviao man) {
 		return aviaoRepository.save(man);
 	}

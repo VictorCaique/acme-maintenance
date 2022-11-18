@@ -1,14 +1,12 @@
 package com.acme.maintenance.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -27,19 +25,30 @@ public class Manutencao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private int numeroManutencao;
 	private String motivoManutencao;
 	private Date data;
 	private String observacoes;
-	@ManyToMany(mappedBy = "manutencoes")
-	private List<Aviao> avioes;
-	private Frequencia frequencia;
 	@ManyToOne
 	@JoinColumn(name = "aviao_id")
+	private Aviao aviao;
+	private Frequencia frequencia;
+	@ManyToOne
+	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
 	
 	public Manutencao() {
 		super();
 	}
+	
+	
+
+	public Manutencao(int id) {
+		super();
+		this.id = id;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -65,12 +74,12 @@ public class Manutencao {
 		this.observacoes = observacoes;
 	}
 
-	public List<Aviao> getAvioes() {
-		return avioes;
+	public Aviao getAvioes() {
+		return aviao;
 	}
 
-	public void setAvioes(List<Aviao> avioes) {
-		this.avioes = avioes;
+	public void setAvioes(Aviao aviao) {
+		this.aviao = aviao;
 	}
 
 	public Frequencia getFrequencia() {
@@ -92,7 +101,7 @@ public class Manutencao {
 	@Override
 	public String toString() {
 		return "Manutencao [id=" + id + ", motivoManutencao=" + motivoManutencao 
-				+ ", observacoes=" + observacoes + ", avioes=" + avioes + ", frequencia=" + frequencia + "]";
+				+ ", observacoes=" + observacoes + ", aviao=" + aviao + ", frequencia=" + frequencia + "]";
 	}
 
 	public Date getData() {
@@ -101,5 +110,13 @@ public class Manutencao {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public int getNumeroManutencao() {
+		return numeroManutencao;
+	}
+
+	public void setNumeroManutencao(int numeroManutencao) {
+		this.numeroManutencao = numeroManutencao;
 	}
 }

@@ -23,12 +23,19 @@ public class Tecnico {
 	private String cpf;
 	private String telefone;
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "peca_id", referencedColumnName = "id")
+	@JoinColumn(name = "manutencao_id", referencedColumnName = "id")
 	private List<Manutencao> manutencoes;
 	
 	public Tecnico() {
 		super();
 	}
+
+	public Tecnico(int id) {
+		super();
+		this.id = id;
+	}
+
+
 
 	public int getId() {
 		return id;

@@ -10,14 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "AVIAO", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
+@Table(name = "AVIAO", uniqueConstraints = @UniqueConstraint(columnNames = { "id", "nserie" }))
 public class Aviao implements Serializable {
 	/**
 	 * 
@@ -39,14 +38,20 @@ public class Aviao implements Serializable {
 	private List<Peca> componentes;
 	private String notificacao;
 	private Date data_notificacao;
-	@ManyToMany
-	@JoinTable(name = "aviao_manutencao", joinColumns = { @JoinColumn(name = "fk_aviao") }, inverseJoinColumns = {
-			@JoinColumn(name = "fk_manutencao") })
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "manutencao_id", referencedColumnName = "id")
 	private List<Manutencao> manutencoes;
 
 	public Aviao() {
 		super();
 	}
+	
+	public Aviao(int id) {
+		super();
+		this.id = id;
+	}
+
+
 
 	public int getId() {
 		return id;

@@ -1,6 +1,6 @@
 package com.acme.maintenance.controller;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -48,6 +48,12 @@ public class ControleAviao {
 		return aviaoService.getAviaoById(id);
 	}
 
+	/* Função de busca de peca por nserie */
+	@GetMapping("/nserie/{nserie}")
+	public ResponseEntity<Object> findByNSerie(@PathVariable int nserie) {
+		return aviaoService.findByNSerie(nserie);
+	}	
+	
 	/* Função de exclusão de avião */
 	@DeleteMapping("/{id}")
 	public void deleteAviaoById(@PathVariable int id) {
@@ -92,11 +98,13 @@ public class ControleAviao {
 
 	/* Função de inicializar peca do avião */
 	@PostMapping("/{id}/peca/{idPeca}/init")
-	public Peca initPeca(@PathVariable int id, @PathVariable int idPeca) {
+	public Peca initPeca(@PathVariable int id, @PathVariable int idPeca, @RequestBody Peca newPeca) {
 		return aviaoService.getAviaoById(id).map((avi) -> {
 			return pecaService.getPecaById(idPeca).map((pec) -> {
 				pec.setActive(true);
-				pec.setDataInicio(new Date());
+				LocalDate lt = LocalDate.now();
+				pec.setDataInicio(lt);
+				pec.setDataVencimento(lt.plusYears(newPeca.getTempoValidade()));
 				return pecaService.save(pec);
 			}).orElseThrow(() -> {
 				return new NoSuchElementException();
