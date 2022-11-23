@@ -1,5 +1,6 @@
 package com.acme.maintenance.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -18,13 +20,17 @@ public class Tecnico {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	private String nome;
-	private String cpf;
-	private String telefone;
+	public int id;
+	public String nome;
+	public LocalDate dataNasc;
+	public String cpf;
+	public String telefone;
+	public String endereco;
+	public String setor;
+	public String especializacao;
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "manutencao_id", referencedColumnName = "id")
-	private List<Manutencao> manutencoes;
+	public List<Manutencao> manutencoes;
 	
 	public Tecnico() {
 		super();
@@ -75,6 +81,38 @@ public class Tecnico {
 
 	public void setManutencoes(List<Manutencao> manutencoes) {
 		this.manutencoes = manutencoes;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getSetor() {
+		return setor;
+	}
+
+	public void setSetor(String setor) {
+		this.setor = setor;
+	}
+
+	public String getEspecializacao() {
+		return especializacao;
+	}
+
+	public void setEspecializacao(String especializacao) {
+		this.especializacao = especializacao;
+	}
+
+	public LocalDate getDataNasc() {
+		return dataNasc;
+	}
+
+	public void setDataNasc(LocalDate dataNasc) {
+		this.dataNasc = dataNasc;
 	}
 
 	@Override
