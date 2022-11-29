@@ -27,7 +27,6 @@ public class Notificacao {
 	@ManyToOne
 	@JoinColumn(name = "manutencao_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
 	private Manutencao manutecao;
 
 	public Notificacao() {

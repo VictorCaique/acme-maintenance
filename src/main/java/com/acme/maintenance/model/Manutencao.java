@@ -29,6 +29,7 @@ public class Manutencao {
 	private String motivoManutencao;
 	private Date data;
 	private String observacoes;
+	private double custo;
 	@ManyToOne
 	@JoinColumn(name = "aviao_id")
 	private Aviao aviao;
@@ -118,5 +119,17 @@ public class Manutencao {
 
 	public void setNumeroManutencao(int numeroManutencao) {
 		this.numeroManutencao = numeroManutencao;
+	}
+
+
+
+	public double getCusto() {
+		return custo;
+	}
+
+
+
+	public void setCusto(double custo) {
+		this.custo = custo;
 	}
 }

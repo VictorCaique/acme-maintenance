@@ -1,5 +1,7 @@
 package com.acme.maintenance.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.acme.maintenance.model.Manutencao;
 import com.acme.maintenance.model.Notificacao;
+import com.acme.maintenance.model.SearchParams;
 import com.acme.maintenance.service.ManutencaoService;
 import com.acme.maintenance.service.NotificacaoService;
 import com.acme.maintenance.service.TecnicoService;
@@ -43,6 +46,27 @@ public class ControleManutencao {
 	public Optional<Manutencao> getManutencaoById(@PathVariable int id) {
 		return manutencaoService.findById(id);
 	}
+
+	@GetMapping("/data/{data}")
+	public ResponseEntity<Object>getManutencaoByData(@PathVariable String data) throws ParseException {
+		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(data);  
+		
+		return manutencaoService.findByData(date1);
+	}
+	
+	@GetMapping("/motivo/{motivo}")
+	public ResponseEntity<Object>getManutencaoByMotivo(@PathVariable String motivo) {
+
+		return manutencaoService.findByMotivo(motivo);
+	}
+	
+	@PostMapping("/search")
+	public ResponseEntity<Object>getManutencaoPrint(@RequestBody SearchParams sp) throws ParseException {
+		
+	
+		return manutencaoService.findManutencoesSearch(sp.getDate(), sp.getAviaoId(), sp.getMotivo(), sp.getNumMan());
+	}
+	
 	
 	@PostMapping("/")
 	public Manutencao createManutencao(@RequestBody Manutencao newMan) {

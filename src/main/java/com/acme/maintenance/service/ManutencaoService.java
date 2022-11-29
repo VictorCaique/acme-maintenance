@@ -34,6 +34,33 @@ public class ManutencaoService {
 		
 		return new ResponseEntity<>(dbManutencoes, HttpStatus.OK);
 	}
+
+	public ResponseEntity<Object> findByData(Date date){
+		List<Manutencao> dbManutencoes = manutencaoRepository.findByData(date);
+		if(dbManutencoes.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(dbManutencoes, HttpStatus.OK);
+	}
+
+	public ResponseEntity<Object> findByMotivo(String motivo){
+		List<Manutencao> dbManutencoes = manutencaoRepository.findByMotivoManutencao(motivo);
+		if(dbManutencoes.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(dbManutencoes, HttpStatus.OK);
+	}
+
+	public ResponseEntity<Object> findManutencoesSearch(Date date, int aviaoId, String motivo, int numMan){
+		List<Manutencao> dbManutencoes = manutencaoRepository.findManutencoesPrint(date, aviaoId, motivo, numMan);
+		if(dbManutencoes.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(dbManutencoes, HttpStatus.OK);
+	}
 	
 	public Manutencao save(Manutencao man) {
 		return manutencaoRepository.save(man);
